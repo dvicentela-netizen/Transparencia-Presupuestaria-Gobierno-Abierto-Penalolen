@@ -169,8 +169,6 @@ with st.sidebar:
     )
     anio_sel = st.selectbox("Año presupuestario", anios, index=0)
 
-    tipo_sel = st.radio("Tipo de balance", ["Gastos", "Ingresos"], horizontal=True)
-    df_base  = df_gastos if tipo_sel == "Gastos" else df_ingresos
     df_anio  = df_base[df_base["anio"] == anio_sel]
 
     meses_disp = sorted(df_anio["mes_cierre"].unique(), reverse=True)
@@ -204,13 +202,25 @@ st.markdown(f"""
 
 with st.container():
     st.markdown('<div class="control-bar">', unsafe_allow_html=True)
-    c1, c2 = st.columns(2)
+
+    c1, c2, c3 = st.columns(3)
+    
     with c1:
+        tipo_sel = st.radio(
+            "Tipo de balance", 
+            ["Gastos", "Ingresos"], 
+            horizontal=True
+        )
+    
+    with c2:
         tipo_grafico = st.radio(
-            "Tipo de gráfico", ["Treemap", "Sunburst"], horizontal=True,
+            "Tipo de gráfico", 
+            ["Treemap", "Sunburst"], 
+            horizontal=True,
             help="Treemap: rectángulos anidados. Sunburst: círculos concéntricos.",
         )
-    with c2:
+        
+    with c3:
         col_metrica_lbl = st.radio(
             "Tamaño de bloques según",
             ["Devengado acumulado", "Presupuesto vigente"],
@@ -218,12 +228,19 @@ with st.container():
         )
     st.markdown("</div>", unsafe_allow_html=True)
 
+# --- LÓGICA DE DATOS (Se ejecuta después de la selección) ---
+
+# 1. Definir DataFrames según tipo de balance
+df_base = df_gastos if tipo_sel == "Gastos" else df_ingresos
+df_anio = df_base[df_base["anio"] == anio_sel]
+
+# 2. Definir métrica para el tamaño del gráfico
 col_metrica = (
     "DEVENGADO_ACUMULADO" if col_metrica_lbl == "Devengado acumulado"
     else "PRESUPUESTO_VIGENTE"
 )
 
-# Columna y etiqueta de ejecución según tipo de balance
+# 3. Etiquetas de ejecución (Gastos usa Devengado, Ingresos usa Percibido)
 col_ejec_num = "DEVENGADO_ACUMULADO" if tipo_sel == "Gastos" else "PERCIBIDO_ACUMULADO"
 col_ejec_lbl = "Devengado acumulado" if tipo_sel == "Gastos" else "Percibido acumulado"
 
