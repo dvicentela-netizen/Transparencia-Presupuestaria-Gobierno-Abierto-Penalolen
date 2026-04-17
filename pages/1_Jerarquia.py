@@ -169,8 +169,6 @@ with st.sidebar:
     )
     anio_sel = st.selectbox("Año presupuestario", anios, index=0)
 
-    df_anio  = df_base[df_base["anio"] == anio_sel]
-
     meses_disp = sorted(df_anio["mes_cierre"].unique(), reverse=True)
     mes_opts   = {MESES_ES[m]: m for m in meses_disp}
     mes_lbl    = st.selectbox("Cierre mensual", list(mes_opts.keys()), index=0)
