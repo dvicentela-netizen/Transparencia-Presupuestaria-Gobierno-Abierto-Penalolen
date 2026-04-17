@@ -62,7 +62,7 @@ st.markdown(f"""
 
     /* Efecto al pasar el ratón */
     [data-testid="stPageLink"] a:hover {{
-        background-color: #E8F0FE;
+        background-color: ##FF8500;
         border-color: #222957;
         color: #FF8500 !important;
         transform: translateY(-1px);
