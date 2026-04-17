@@ -172,14 +172,7 @@ with st.sidebar:
 # ---------------------------------------------------------------------------
 # Header
 # ---------------------------------------------------------------------------
-
-st.markdown(f"""
-<div class="header-strip">
-  <h1>🌳 Jerarquía presupuestaria — {tipo_sel}</h1>
-  <p>Municipalidad de Peñalolén &nbsp;·&nbsp; {mes_lbl} {anio_sel}
-     &nbsp;·&nbsp; Niveles: Subtítulo → Ítem → Asignación</p>
-</div>
-""", unsafe_allow_html=True)
+header_placeholder = st.empty()
 
 # ---------------------------------------------------------------------------
 # Controles del gráfico
@@ -243,6 +236,15 @@ with st.sidebar:
         "Actualización mensual.</span>",
         unsafe_allow_html=True,
     )
+
+header_placeholder.markdown(f"""
+<div class="header-strip">
+  <h1>🌳 Jerarquía presupuestaria — {tipo_sel}</h1>
+  <p>Municipalidad de Peñalolén &nbsp;·&nbsp; {mes_lbl} {anio_sel}
+     &nbsp;·&nbsp; Niveles: Subtítulo → Ítem → Asignación</p>
+</div>
+""", unsafe_allow_html=True)
+
 # ---------------------------------------------------------------------------
 # Preparación de datos
 # ---------------------------------------------------------------------------
