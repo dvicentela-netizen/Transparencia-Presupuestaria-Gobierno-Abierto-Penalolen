@@ -74,7 +74,7 @@ st.markdown(f"""
     }}
     .header-strip h1 {{
         font-size: 1.7rem; font-weight: 700; margin: 0 0 4px 0;
-        color: {COLOR_BLANCO}; letter-spacing: 0.01em;
+        color: {COLOR_OSCURO}; letter-spacing: 0.01em;
     }}
     .header-strip p {{ font-size: 0.95rem; margin: 0; opacity: 0.85; color: {COLOR_BLANCO}; }}
 
@@ -238,7 +238,7 @@ with st.sidebar:
     st.markdown("---")
     st.markdown(
         "<span style='font-size:0.75rem;opacity:0.6;'>"
-        "Información oficial extraída del ERP contable municipal. "
+        "Información oficial extraída desde CAS Chile. "<br>
         "Actualización mensual.</span>",
         unsafe_allow_html=True,
     )
