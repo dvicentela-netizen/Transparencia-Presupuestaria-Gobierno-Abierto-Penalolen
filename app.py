@@ -44,6 +44,9 @@ st.set_page_config(
 
 st.markdown(f"""
 <style>
+[data-testid="stAppViewContainer"] {{
+        background-color: #FFFFFF;
+    }}
     [data-testid="stSidebar"] {{ background-color: {COLOR_OSCURO}; }}
     [data-testid="stSidebar"] * {{ color: {COLOR_BLANCO} !important; }}
 
