@@ -61,7 +61,7 @@ st.markdown(f"""
     .header-strip p {{ font-size: 0.88rem; margin: 0; opacity: 0.82; color: {COLOR_BLANCO}; }}
 
     .control-bar {{
-        background: {COLOR_FONDO}; border: 1px solid #DDE4F0;
+        background: {COLOR_OSCURO}; border: 1px solid #DDE4F0;
         border-radius: 10px; padding: 16px 20px; margin-bottom: 20px;
     }}
     .seccion {{
