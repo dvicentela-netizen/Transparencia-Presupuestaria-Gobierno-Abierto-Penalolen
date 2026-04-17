@@ -50,7 +50,13 @@ st.markdown(f"""
     }}
     [data-testid="stSidebar"] {{ background-color: {COLOR_OSCURO}; }}
     [data-testid="stSidebar"] * {{ color: {COLOR_BLANCO} !important; }}
-
+    [data-testid="stRadio"] label p {{
+        color: {COLOR_OSCURO} !important; 
+        font-weight: 600;
+    }}
+    [data-testid="stRadio"] div[role="radiogroup"] label div {{
+        color: {COLOR_TEXTO} !important; 
+    }}
     .header-strip {{
         background: linear-gradient(90deg, {COLOR_OSCURO} 0%, {COLOR_PRINCIPAL} 100%);
         border-radius: 10px; padding: 22px 32px 18px 32px; margin-bottom: 24px;
