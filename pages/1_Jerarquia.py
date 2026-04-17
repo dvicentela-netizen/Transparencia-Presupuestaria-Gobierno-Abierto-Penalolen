@@ -169,19 +169,6 @@ with st.sidebar:
     )
     anio_sel = st.selectbox("Año presupuestario", anios, index=0)
 
-    meses_disp = sorted(df_anio["mes_cierre"].unique(), reverse=True)
-    mes_opts   = {MESES_ES[m]: m for m in meses_disp}
-    mes_lbl    = st.selectbox("Cierre mensual", list(mes_opts.keys()), index=0)
-    mes_sel    = mes_opts[mes_lbl]
-
-    st.markdown("---")
-    st.markdown(
-        "<span style='font-size:0.75rem;opacity:0.6;'>"
-        "Información oficial extraída del ERP contable municipal. "
-        "Actualización mensual.</span>",
-        unsafe_allow_html=True,
-    )
-
 # ---------------------------------------------------------------------------
 # Header
 # ---------------------------------------------------------------------------
@@ -242,6 +229,20 @@ col_metrica = (
 col_ejec_num = "DEVENGADO_ACUMULADO" if tipo_sel == "Gastos" else "PERCIBIDO_ACUMULADO"
 col_ejec_lbl = "Devengado acumulado" if tipo_sel == "Gastos" else "Percibido acumulado"
 
+with st.sidebar:
+    meses_disp = sorted(df_anio["mes_cierre"].unique(), reverse=True)
+    mes_opts   = {MESES_ES[m]: m for m in meses_disp}
+    mes_lbl    = st.selectbox("Cierre mensual", list(mes_opts.keys()), index=0)
+    mes_sel    = mes_opts[mes_lbl]
+
+    st.markdown("---")
+    
+    st.markdown(
+        "<span style='font-size:0.75rem;opacity:0.6;'>"
+        "Información oficial extraída del ERP contable municipal.<br>"
+        "Actualización mensual.</span>",
+        unsafe_allow_html=True,
+    )
 # ---------------------------------------------------------------------------
 # Preparación de datos
 # ---------------------------------------------------------------------------
