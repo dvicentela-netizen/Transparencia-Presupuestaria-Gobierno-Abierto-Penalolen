@@ -51,7 +51,7 @@ st.markdown(f"""
     [data-testid="stSidebar"] * {{ color: {COLOR_BLANCO} !important; }}
     [data-testid="stPageLink"] a {{
         background-color: {COLOR_BLANCO};
-        color: {COLOR_OSCURO} !important; 
+        color: #222957 !important; 
         border: 1px solid #DDE4F0;
         border-radius: 8px;
         padding: 8px 12px;
@@ -64,7 +64,7 @@ st.markdown(f"""
     [data-testid="stPageLink"] a:hover {{
         background-color: #E8F0FE;
         border-color: {COLOR_PRINCIPAL};
-        color: {COLOR_ACENTO} !important;
+        color: #FF8500 !important;
         transform: translateY(-1px);
     }}
 
