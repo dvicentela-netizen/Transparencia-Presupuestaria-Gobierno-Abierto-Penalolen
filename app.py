@@ -237,9 +237,9 @@ with st.sidebar:
     anio_sel = st.selectbox("Año presupuestario", options=anios, index=0)
     st.markdown("---")
     st.markdown(
-        "<span style='font-size:0.75rem;opacity:0.6;'>"
-        "Información oficial extraída desde CAS Chile. "<br>
-        "Actualización mensual.</span>",
+        f"<span style='font-size:0.75rem;opacity:0.6;'>"
+        f"Información oficial extraída desde CAS Chile.<br> "
+        f"Actualización mensual.</span>",
         unsafe_allow_html=True,
     )
 
