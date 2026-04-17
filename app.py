@@ -453,15 +453,15 @@ with nav3:
 
 st.markdown("""
 <div class="nota-metodologica">
-  <b>Nota metodológica</b> &nbsp;·&nbsp; Los montos se expresan en pesos chilenos (CLP).
+  <b>Nota metodológica</b> &nbsp;·&nbsp; Los montos se expresan en pesos chilenos (CLP). <br><br>
   <b>Devengado acumulado:</b> compromisos presupuestarios reconocidos desde el 1 de enero,
-  independientemente de si han sido pagados.
-  <b>Pagado acumulado:</b> monto efectivamente transferido a proveedores o beneficiarios.
-  <b>Percibido acumulado:</b> monto efectivamente ingresado a las arcas municipales.
-  <b>Presupuesto vigente:</b> presupuesto inicial más modificaciones aprobadas.
+  independientemente de si han sido pagados.<br>
+  <b>Pagado acumulado:</b> monto efectivamente transferido a proveedores o beneficiarios.<br>
+  <b>Percibido acumulado:</b> monto efectivamente ingresado a las arcas municipales.<br>
+  <b>Presupuesto vigente:</b> presupuesto inicial más modificaciones aprobadas.<br><br>
   Una línea de <b>gasto</b> está 100% ejecutada cuando el devengado acumulado iguala
   el presupuesto vigente; una línea de <b>ingreso</b> está 100% ejecutada cuando el
-  percibido acumulado iguala el presupuesto vigente.
+  percibido acumulado iguala el presupuesto vigente.<br>
   Valores superiores al 100% indican <b>sobredevengado o sobrepercibido</b>,
   situación que puede ocurrir cuando un movimiento se registra antes de completarse
   la modificación presupuestaria correspondiente.
