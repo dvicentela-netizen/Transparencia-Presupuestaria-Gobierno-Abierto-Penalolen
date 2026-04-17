@@ -387,7 +387,7 @@ if not df_g_sel.empty:
                     label = label[:40] + "…"
                 pct = row["pct"]
                 pct_txt = f"{pct:.1f}%" if pct != float("inf") else "sin ppto."
-                color_pct = "#BC092C" if pct > 100 else COLOR_PRINCIPAL
+                color_pct = "#FFFFFF" if pct > 100 else COLOR_PRINCIPAL
                 st.markdown(f"""
                 <div class="progress-row">
                   <div class="progress-label">
