@@ -49,11 +49,28 @@ st.markdown(f"""
     }}
     [data-testid="stSidebar"] {{ background-color: {COLOR_OSCURO}; }}
     [data-testid="stSidebar"] * {{ color: {COLOR_BLANCO} !important; }}
+    [data-testid="stPageLink"] a {{
+        background-color: {COLOR_BLANCO};
+        color: {COLOR_OSCURO} !important; 
+        border: 1px solid #DDE4F0;
+        border-radius: 8px;
+        padding: 8px 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+    }}
 
-    .header-strip {{
-        background: linear-gradient(90deg, {COLOR_OSCURO} 0%, {COLOR_PRINCIPAL} 100%);
-        border-radius: 10px; padding: 28px 36px 22px 36px;
-        margin-bottom: 28px;
+    /* Efecto al pasar el ratón */
+    [data-testid="stPageLink"] a:hover {{
+        background-color: #E8F0FE;
+        border-color: {COLOR_PRINCIPAL};
+        color: {COLOR_ACENTO} !important;
+        transform: translateY(-1px);
+    }}
+
+    /* Efecto al hacer clic */
+    [data-testid="stPageLink"] a:active {{
+        transform: translateY(0px);
     }}
     .header-strip h1 {{
         font-size: 1.7rem; font-weight: 700; margin: 0 0 4px 0;
