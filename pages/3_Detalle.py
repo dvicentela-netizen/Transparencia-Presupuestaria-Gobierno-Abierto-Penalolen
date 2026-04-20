@@ -90,7 +90,7 @@ st.markdown(f"""
     }}
 
     .filtros-box {{
-        background: {COLOR_FONDO}; border: 1px solid #DDE4F0;
+        background: {COLOR_OSCURO}; border: 1px solid #DDE4F0;
         border-radius: 10px; padding: 16px 20px; margin-bottom: 20px;
     }}
 
