@@ -479,10 +479,13 @@ color_pct = (
     else "#1A3A7A"
 )
 
+str_ppto = fmt_millones(ppto_sel).replace("$", "&#36;")
+str_ejec = fmt_millones(ejec_sel).replace("$", "&#36;")
+
 st.markdown(
     f'<span class="stat-pill">{n_filas:,} de {n_total:,} registros</span>'
-    f'<span class="stat-pill">Ppto. vigente: {fmt_millones(ppto_sel)}</span>'
-    f'<span class="stat-pill">{ejec_lbl}: {fmt_millones(ejec_sel)}</span>'
+    f'<span class="stat-pill">Ppto. vigente: {str_ppto}</span>'
+    f'<span class="stat-pill">{ejec_lbl}: {str_ejec}</span>'
     f'<span class="stat-pill" style="background:#E8F0FE;color:{color_pct};">'
     f'Ejecución: {pct_sel:.1f}%</span>',
     unsafe_allow_html=True,
@@ -529,7 +532,7 @@ for col_orig in [
     if nombre_display in df_tabla.columns:
         col_config[nombre_display] = st.column_config.NumberColumn(
             nombre_display,
-            format="$ %d",
+            format="$ %,d",
             width="medium",
         )
 
