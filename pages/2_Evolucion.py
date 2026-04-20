@@ -407,23 +407,26 @@ fig.update_layout(
         xanchor="left",
         x=0,
         title_text="Año",
-        font=dict(size=12),
+        title_font=dict(color=COLOR_OSCURO),    # <-- Añadido: Color del título "Año"
+        font=dict(size=12, color=COLOR_TEXTO),  # <-- Añadido: Color de los números de los años
     ),
     xaxis=dict(
         title="Mes",
+        color=COLOR_OSCURO,                     # <-- Añadido: Controla el color general del eje X
         showgrid=True,
         gridcolor="#EEF2FB",
         gridwidth=1,
         zeroline=False,
-        tickfont=dict(size=11),
+        tickfont=dict(size=11, color=COLOR_OSCURO), # <-- Añadido: Fuerza el color de los meses (Ene, Feb...)
     ),
     yaxis=dict(
         title=metrica_lbl + " (CLP)",
+        color=COLOR_OSCURO,                     # <-- Añadido: Controla el color general del eje Y
         showgrid=True,
         gridcolor="#EEF2FB",
         gridwidth=1,
         zeroline=False,
-        tickfont=dict(size=11),
+        tickfont=dict(size=11, color=COLOR_OSCURO), # <-- Añadido: Fuerza el color de los montos
         tickformat="$,.0f",
     ),
     hovermode="x unified",
