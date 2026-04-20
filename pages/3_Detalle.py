@@ -61,6 +61,10 @@ st.markdown(f"""
     }}
     [data-testid="stSidebar"] {{ background-color: {COLOR_OSCURO}; }}
     [data-testid="stSidebar"] * {{ color: {COLOR_BLANCO} !important; }}
+    [data-testid="stSelectbox"] label p {{
+        color: {COLOR_OSCURO} !important;
+        font-weight: 600; 
+    }}
 
     .header-strip {{
         background: linear-gradient(90deg, {COLOR_OSCURO} 0%, {COLOR_PRINCIPAL} 100%);
