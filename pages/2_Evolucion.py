@@ -23,6 +23,8 @@ import pandas as pd
 import plotly.graph_objects as go
 
 from data_loader import cargar_datos
+from utils import sidebar_institucional
+sidebar_institucional()
 
 # ---------------------------------------------------------------------------
 # Paleta institucional
