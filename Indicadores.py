@@ -442,7 +442,7 @@ with nav1:
       de anillos interactivos, desde el título hasta la denominación de cuenta.</p>
     </div>
     """, unsafe_allow_html=True)
-    st.page_link("pages/1_Jerarquia.py", label="Ir a Jerarquía →")
+    st.page_link("pages/1_Ejecución_por_Subtítulos.py", label="Ir a Ejecución →")
 
 with nav2:
     st.markdown("""
