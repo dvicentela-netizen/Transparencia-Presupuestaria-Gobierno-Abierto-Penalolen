@@ -13,6 +13,8 @@ import streamlit as st
 import pandas as pd
 
 from data_loader import cargar_datos
+from utils import sidebar_institucional
+sidebar_institucional()
 
 # ---------------------------------------------------------------------------
 # Paleta institucional
