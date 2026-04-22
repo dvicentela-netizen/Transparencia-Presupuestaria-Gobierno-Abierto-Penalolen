@@ -2,8 +2,7 @@
 import streamlit as st
 
 def sidebar_institucional():
-    st.logo("assets/logo.png", link="https://www.penalolen.cl")
-    with st.sidebar:
+        st.image("assets/logo.png", width=180)  # ajusta el ancho a tu gusto
         st.markdown(
             "<div style='padding:10px 0 18px 0'>"
             "<span style='font-size:1.1rem;font-weight:700;'>🏛️ Peñalolén</span><br>"
@@ -11,3 +10,4 @@ def sidebar_institucional():
             "</div>",
             unsafe_allow_html=True,
         )
+
