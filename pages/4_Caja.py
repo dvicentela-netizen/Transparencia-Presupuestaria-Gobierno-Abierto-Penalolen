@@ -72,8 +72,26 @@ st.markdown(f"""
 [data-testid="stAppViewContainer"] {{
         background-color: #FFFFFF;
     }}
-    [data-testid="stSidebar"] {{ background-color: {COLOR_OSCURO}; }}
-    [data-testid="stSidebar"] * {{ color: {COLOR_BLANCO} !important; }}
+    
+    [data-testid="stSidebar"] { background-color: {COLOR_OSCURO}; }
+    
+    
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] label { 
+        color: {COLOR_BLANCO} !important; 
+    }
+    
+    
+    [data-testid="stSidebar"] div[data-baseweb="select"] * {
+        color: {COLOR_TEXTO} !important;
+    }
+    
+    
+    [data-testid="stSidebar"] span[data-baseweb="tag"] {
+        background-color: {COLOR_ACENTO} !important;
+        color: {COLOR_BLANCO} !important;
+        border: none;
+    }
 
     .header-strip {{
         background: linear-gradient(90deg, {COLOR_OSCURO} 0%, {COLOR_PRINCIPAL} 100%);
