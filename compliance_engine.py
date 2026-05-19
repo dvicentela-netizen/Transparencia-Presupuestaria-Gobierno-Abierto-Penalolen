@@ -1,42 +1,33 @@
 """
 compliance_engine.py — Límites legales presupuestarios
 =======================================================
-Implementa las restricciones normativas aplicables al presupuesto
-de personal de la Municipalidad de Peñalolén:
+Restricciones normativas aplicables al presupuesto de personal:
 
   Límite 1: Contrata ≤ 40% de Planta
   Límite 2: Honorarios (215-21-03-001) ≤ 10% de Planta
 
-Aplica sobre:
-  - Presupuesto inicial
-  - Presupuesto vigente
-  - Devengado parcial acumulado (suma de parciales)
-  - Devengado acumulado (columna acumulada del cierre)
+Aplica sobre: Presupuesto inicial, Presupuesto vigente, Devengado acumulado.
 
-Fuente normativa:
-  Ley N° 18.834 (Estatuto Administrativo), Art. 9°:
-  "El número de personas contratadas a honorarios no podrá
-  ser superior al 40% de la dotación de planta."
-  Ley de Presupuestos del Sector Público (glosa anual aplicable).
+Fuente: Ley N° 18.834 (Estatuto Administrativo), Art. 9°
+        Glosas anuales de la Ley de Presupuestos del Sector Público.
 """
 
 from __future__ import annotations
 from dataclasses import dataclass
 import pandas as pd
-import numpy as np
 
 # ---------------------------------------------------------------------------
-# Constantes de identificación de cuentas
+# Constantes
 # ---------------------------------------------------------------------------
 
 ITEM_PLANTA    = "PERSONAL DE PLANTA"
 ITEM_CONTRATA  = "PERSONAL A CONTRATA"
-ITEM_HONOR_PAD = "OTRAS REMUNERACIONES"   # ítem padre de honorarios
+ITEM_HONOR_PAD = "OTRAS REMUNERACIONES"
 ASIG_HONOR     = "HONORARIOS A LA SUMA ALZADA  PERSONAS NATURALES"
-COD_HONOR      = "215-21-03-001"           # código canónico
+COD_HONOR      = "215-21-03-001"
 
-LIMITE_CONTRATA = 0.40   # 40% del devengado de planta
-LIMITE_HONOR    = 0.10   # 10% del devengado de planta
+LIMITE_CONTRATA = 0.40
+LIMITE_HONOR    = 0.10
 
 COLS_MEDICION = [
     "PRESUPUESTO_INICIAL",
@@ -46,27 +37,26 @@ COLS_MEDICION = [
 
 
 # ---------------------------------------------------------------------------
-# Dataclass de resultado de cumplimiento
+# Dataclass de resultado
 # ---------------------------------------------------------------------------
 
 @dataclass
 class ResultadoLimite:
-    """Resultado de verificación de un límite legal para un período."""
     anio: int
     mes_cierre: int
-    limite_nombre: str          # "Contrata/Planta" o "Honorarios/Planta"
-    limite_pct: float           # 0.40 o 0.10
-    columna: str                # "PRESUPUESTO_VIGENTE", etc.
+    limite_nombre: str
+    limite_pct: float
+    columna: str
     valor_planta: float
-    valor_restringido: float    # contrata u honorarios
-    maximo_permitido: float     # limite_pct × valor_planta
-    ratio_actual: float         # valor_restringido / valor_planta
-    exceso: float               # valor_restringido - maximo_permitido (>0 = vulnerado)
+    valor_restringido: float
+    maximo_permitido: float
+    ratio_actual: float
+    exceso: float
     vulnerado: bool
 
 
 # ---------------------------------------------------------------------------
-# Identificación de cuentas en el DataFrame
+# Máscaras de identificación de cuentas
 # ---------------------------------------------------------------------------
 
 def _mask_planta(df: pd.DataFrame) -> pd.Series:
@@ -78,15 +68,10 @@ def _mask_contrata(df: pd.DataFrame) -> pd.Series:
 
 
 def _mask_honorarios(df: pd.DataFrame) -> pd.Series:
-    """
-    Identifica honorarios por código canónico (más robusto que por nombre).
-    Fallback por nombre de asignación si el código no está disponible.
-    """
     if "CODIGO_CUENTA" in df.columns:
         por_codigo = df["CODIGO_CUENTA"].astype(str).str.startswith(COD_HONOR)
         if por_codigo.any():
             return por_codigo
-    # Fallback por nombre
     return (
         (df["Ítem_Nombre"] == ITEM_HONOR_PAD) &
         (df["Asignación_Nombre"].str.contains("HONORARIOS A LA SUMA ALZADA", na=False))
@@ -102,17 +87,7 @@ def diagnosticar_historico(
     cols: list[str] | None = None,
 ) -> list[ResultadoLimite]:
     """
-    Calcula el cumplimiento de los límites legales para cada cierre
-    mensual disponible en el DataFrame.
-
-    Parámetros
-    ----------
-    df : DataFrame consolidado de gastos (todos los años y meses)
-    cols : columnas a verificar (default: COLS_MEDICION)
-
-    Retorna
-    -------
-    Lista de ResultadoLimite ordenada por anio, mes_cierre, columna
+    Calcula el cumplimiento de los límites legales para cada cierre mensual.
     """
     if cols is None:
         cols = COLS_MEDICION
@@ -144,7 +119,6 @@ def diagnosticar_historico(
             if val_planta == 0:
                 continue
 
-            # Límite 1: Contrata / Planta ≤ 40%
             max_contrata = val_planta * LIMITE_CONTRATA
             resultados.append(ResultadoLimite(
                 anio=anio, mes_cierre=mes,
@@ -159,7 +133,6 @@ def diagnosticar_historico(
                 vulnerado=val_contrata > max_contrata,
             ))
 
-            # Límite 2: Honorarios / Planta ≤ 10%
             max_honor = val_planta * LIMITE_HONOR
             resultados.append(ResultadoLimite(
                 anio=anio, mes_cierre=mes,
@@ -178,7 +151,6 @@ def diagnosticar_historico(
 
 
 def historico_a_df(resultados: list[ResultadoLimite]) -> pd.DataFrame:
-    """Convierte lista de ResultadoLimite a DataFrame plano."""
     return pd.DataFrame([
         {
             "anio":               r.anio,
@@ -197,7 +169,7 @@ def historico_a_df(resultados: list[ResultadoLimite]) -> pd.DataFrame:
 
 
 # ---------------------------------------------------------------------------
-# Escenario de techo legal (Escenario A)
+# Techo legal para escenario A
 # ---------------------------------------------------------------------------
 
 def calcular_techo_legal(
@@ -207,20 +179,15 @@ def calcular_techo_legal(
     ppto_planta_por_anio: dict[int, float] | None = None,
 ) -> dict[str, dict[int, float]]:
     """
-    Calcula el presupuesto máximo permitido por norma para Contrata
-    y Honorarios en cada año proyectado.
+    Calcula el presupuesto máximo permitido por norma para cada año.
 
-    Si ppto_planta_por_anio es None, usa el presupuesto vigente de Planta
-    del último cierre del anio_base como base sin crecimiento.
-
-    Retorna dict:
+    Retorna:
         {
-          "PERSONAL DE PLANTA":   {anio: monto_planta},
-          "PERSONAL A CONTRATA":  {anio: max_contrata},
-          "HONORARIOS":           {anio: max_honor},
+          "PERSONAL DE PLANTA":  {anio: monto},
+          "PERSONAL A CONTRATA": {anio: max_contrata},
+          "HONORARIOS":          {anio: max_honor},
         }
     """
-    # Presupuesto base de Planta
     df_base = df[df["anio"] == anio_base]
     if not df_base.empty:
         mes_max = df_base["mes_cierre"].max()
@@ -258,24 +225,37 @@ def verificar_proyeccion(
     techo: dict[str, dict[int, float]],
 ) -> pd.DataFrame:
     """
-    Contrasta la proyección de escenario con los techos legales.
+    Contrasta la proyección anual con los techos legales.
 
-    df_proy debe tener columnas: cuenta, anio, monto_anual (de resumen_anual_total)
-    techo: salida de calcular_techo_legal
+    df_proy debe ser la salida de resumen_anual_total(), con columnas:
+        cuenta, anio, monto_anual
+
+    Si se pasa un DataFrame con monto_mensual (salida directa de
+    proyectar_escenario), lo agrega automáticamente por año.
 
     Retorna DataFrame con columnas:
-        anio, cuenta, monto_proyectado, techo_legal, exceso, vulnerado
+        anio, cuenta, monto_proyectado, techo_legal, ratio_%, exceso, vulnerado
     """
-    filas = []
-    anios = df_proy["anio"].unique()
+    # Detección defensiva: si no tiene monto_anual, agregar desde monto_mensual
+    if "monto_anual" not in df_proy.columns:
+        if "monto_mensual" in df_proy.columns:
+            df_proy = (
+                df_proy
+                .groupby(["cuenta", "anio"])["monto_mensual"]
+                .sum()
+                .reset_index()
+                .rename(columns={"monto_mensual": "monto_anual"})
+            )
+        else:
+            return pd.DataFrame()
 
-    # Mapeo de cuenta → clave en techo
+    filas = []
     mapa_techo = {
-        ITEM_CONTRATA: ITEM_CONTRATA,
+        ITEM_CONTRATA:  ITEM_CONTRATA,
         ITEM_HONOR_PAD: "HONORARIOS",
     }
 
-    for anio in sorted(anios):
+    for anio in sorted(df_proy["anio"].unique()):
         df_a = df_proy[df_proy["anio"] == anio]
 
         for cuenta_proy, clave_techo in mapa_techo.items():
@@ -283,29 +263,26 @@ def verificar_proyeccion(
             techo_val  = techo.get(clave_techo, {}).get(anio, None)
             if techo_val is None:
                 continue
-            exceso     = max(monto_proy - techo_val, 0)
+            exceso = max(monto_proy - techo_val, 0)
             filas.append({
-                "anio":              anio,
-                "cuenta":            cuenta_proy,
-                "monto_proyectado":  monto_proy,
-                "techo_legal":       techo_val,
-                "ratio_%":           monto_proy / techo_val * 100 if techo_val > 0 else 0,
-                "exceso":            exceso,
-                "vulnerado":         exceso > 0,
+                "anio":             anio,
+                "cuenta":           cuenta_proy,
+                "monto_proyectado": monto_proy,
+                "techo_legal":      techo_val,
+                "ratio_%":          monto_proy / techo_val * 100 if techo_val > 0 else 0,
+                "exceso":           exceso,
+                "vulnerado":        exceso > 0,
             })
 
     return pd.DataFrame(filas)
 
 
 # ---------------------------------------------------------------------------
-# Resumen de vulneraciones históricas (para dashboard)
+# Resumen de vulneraciones históricas
 # ---------------------------------------------------------------------------
 
 def resumen_vulneraciones(df_hist: pd.DataFrame) -> pd.DataFrame:
-    """
-    Agrega el historial de vulneraciones por año, límite y columna.
-    Útil para el panel de diagnóstico histórico.
-    """
+    """Agrega el historial de vulneraciones por año, límite y columna."""
     return (
         df_hist
         .groupby(["anio", "limite", "columna"])
