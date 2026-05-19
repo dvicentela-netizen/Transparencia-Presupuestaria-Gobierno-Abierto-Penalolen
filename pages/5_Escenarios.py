@@ -541,9 +541,17 @@ with tab_comp:
     # Verificación de límites por escenario
     st.markdown('<div class="seccion">Verificación de límites legales en proyección</div>', unsafe_allow_html=True)
     for esc, df_p in zip(escenarios_lista, df_proyecciones):
-        verif = verificar_proyeccion(resumen_anual_total(df_p), techo)
-        if verif.empty: continue
-        vuln  = verif[verif["vulnerado"]]
+        # Agregar por cuenta×anio preservando la dimensión cuenta
+        # resumen_anual_total la pierde al agrupar solo por escenario×anio
+        df_p_cta = (
+            df_p.groupby(["cuenta", "anio"])["monto_mensual"]
+            .sum().reset_index()
+            .rename(columns={"monto_mensual": "monto_anual"})
+        )
+        verif = verificar_proyeccion(df_p_cta, techo)
+        if verif.empty:
+            continue
+        vuln = verif[verif["vulnerado"]]
         if not vuln.empty:
             anios_vuln = ", ".join(str(int(a)) for a in sorted(vuln["anio"].unique()))
             st.markdown(f"""
