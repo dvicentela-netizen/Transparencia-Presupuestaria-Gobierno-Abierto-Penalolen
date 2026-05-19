@@ -541,7 +541,7 @@ with tab_comp:
     # Verificación de límites por escenario
     st.markdown('<div class="seccion">Verificación de límites legales en proyección</div>', unsafe_allow_html=True)
     for esc, df_p in zip(escenarios_lista, df_proyecciones):
-        verif = verificar_proyeccion(df_p, techo)
+        verif = verificar_proyeccion(resumen_anual_total(df_p), techo)
         if verif.empty: continue
         vuln  = verif[verif["vulnerado"]]
         if not vuln.empty:
