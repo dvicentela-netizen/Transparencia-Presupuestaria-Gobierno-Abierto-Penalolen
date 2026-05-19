@@ -62,7 +62,6 @@ st.set_page_config(
 # ---------------------------------------------------------------------------
 
 st.markdown(f"""
-st.markdown(f"""
 <style>
     [data-testid="stSidebar"] {{ background-color: {COLOR_OSCURO}; }}
     
@@ -80,6 +79,7 @@ st.markdown(f"""
         color: {COLOR_BLANCO} !important;
         border: none;
     }}
+
     .header-strip {{
         background: linear-gradient(90deg, {COLOR_OSCURO} 0%, {COLOR_PRINCIPAL} 100%);
         border-radius: 10px; padding: 22px 32px 18px 32px; margin-bottom: 24px;
@@ -122,7 +122,6 @@ st.markdown(f"""
     }}
 </style>
 """, unsafe_allow_html=True)
-
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
