@@ -62,9 +62,24 @@ st.set_page_config(
 # ---------------------------------------------------------------------------
 
 st.markdown(f"""
+st.markdown(f"""
 <style>
     [data-testid="stSidebar"] {{ background-color: {COLOR_OSCURO}; }}
-    [data-testid="stSidebar"] * {{ color: {COLOR_BLANCO} !important; }}
+    
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] label {{ 
+        color: {COLOR_BLANCO} !important; 
+    }}
+    
+    [data-testid="stSidebar"] div[data-baseweb="select"] * {{
+        color: #1E1E1E !important;
+    }}
+    
+    [data-testid="stSidebar"] span[data-baseweb="tag"] {{
+        background-color: {COLOR_PRINCIPAL} !important;
+        color: {COLOR_BLANCO} !important;
+        border: none;
+    }}
     .header-strip {{
         background: linear-gradient(90deg, {COLOR_OSCURO} 0%, {COLOR_PRINCIPAL} 100%);
         border-radius: 10px; padding: 22px 32px 18px 32px; margin-bottom: 24px;
