@@ -47,11 +47,29 @@ st.set_page_config(
 
 st.markdown(f"""
 <style>
-[data-testid="stAppViewContainer"] {{
+    [data-testid="stAppViewContainer"] {{
         background-color: #FFFFFF;
     }}
-    [data-testid="stSidebar"] {{ background-color: {COLOR_OSCURO}; }}
-    [data-testid="stSidebar"] * {{ color: {COLOR_BLANCO} !important; }}
+    
+    /* Fondo del sidebar */
+    [data-testid="stSidebar"] {{ 
+        background-color: {COLOR_OSCURO}; 
+    }}
+    
+    /* Hacer que textos generales y labels sean blancos */
+    [data-testid="stSidebar"] p, 
+    [data-testid="stSidebar"] label {{ 
+        color: {COLOR_BLANCO} !important; 
+    }}
+    
+    [data-testid="stSidebar"] div[data-baseweb="select"] * {{
+        color: {COLOR_TEXTO} !important;
+    }}
+    [data-testid="stSidebar"] span[data-baseweb="tag"] {{
+        background-color: {COLOR_ACENTO} !important;
+        color: {COLOR_BLANCO} !important;
+        border: none;
+    }}
     [data-testid="stRadio"] label p {{
         color: {COLOR_OSCURO} !important; 
         font-weight: 600;
@@ -157,7 +175,7 @@ df_gastos, df_ingresos = cargar_datos("data")
 
 with st.sidebar:
     st.markdown(
-        "<div style='padding:10px 0 18px 0'>"
+        "<div style='padding:10px 0 18px 0; color: #FFFFFF;'>"
         "<span style='font-size:1.1rem;font-weight:700;'>🏛️ Peñalolén</span><br>"
         "<span style='font-size:0.8rem;opacity:0.7;'>Transparencia Presupuestaria</span>"
         "</div>",
