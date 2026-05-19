@@ -130,10 +130,11 @@ df_gastos, _ = cargar_datos("data")
 
 with st.sidebar:
     st.markdown(
-        "<div style='padding:10px 0 18px 0'>"
+        "<div style='padding:10px 0 18px 0; color: #FFFFFF;'>"
         "<span style='font-size:1.1rem;font-weight:700;'>🏛️ Peñalolén</span><br>"
         "<span style='font-size:0.8rem;opacity:0.7;'>Transparencia Presupuestaria</span>"
-        "</div>", unsafe_allow_html=True,
+        "</div>",
+        unsafe_allow_html=True,
     )
     st.markdown("---")
 
